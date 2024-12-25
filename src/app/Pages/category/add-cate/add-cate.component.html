@@ -1,0 +1,97 @@
+<!-- Modal Overlay -->
+<div
+  class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50"
+>
+  <!-- Modal Container -->
+  <div
+    class="bg-white rounded-lg shadow-lg w-full max-w-4xl flex flex-col md:flex-row"
+  >
+    <!-- Right Section: Form with Grayish Background Image -->
+    <div
+      class="relative w-full p-8 bg-cover bg-center bg-gray-800"
+    >
+      <!-- Overlay Effect -->
+      <div class="absolute inset-0 bg-gray-900 bg-opacity-60"></div>
+
+      <!-- Form Content -->
+      <div class="relative z-10 p-6">
+        <!-- Modal Header -->
+        <div class="flex justify-between items-center border-b pb-3 mb-6">
+          <h2 class="text-3xl w-full text-center font-bold text-yellow-400">
+            Add New Category
+          </h2>
+          <button
+            class="text-white hover:text-gray-300"
+            (click)="closeModal()"
+          >
+            <svg
+              class="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              ></path>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Modal Body -->
+        <p class="text-gray-200 mb-4">
+          Enter the details below to add a new category.
+        </p>
+
+        <!-- Form Fields -->
+        <form (ngSubmit)="onSubmit()" class="space-y-6">
+          <!-- Category Name -->
+          <div>
+            <label
+              for="categoryName"
+              class="block text-sm font-medium text-gray-300 mb-2"
+              >Category Name</label
+            >
+            <input
+            [ngModelOptions]="{standalone: true}"
+              id="categoryName"
+              [(ngModel)]="categoryName"
+              type="text"
+              placeholder="Category Name"
+              class="w-full px-4 py-3 bg-gray-100 rounded-lg text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+            />
+          </div>
+
+          <!-- Category Image -->
+          <div>
+            <label
+              for="categoryImage"
+              class="block text-sm font-medium text-gray-300 mb-2"
+              >Upload Category Image</label
+            >
+            <input
+            
+              id="categoryImage"
+              type="file"
+              accept="image/*"
+              class="w-full px-4 py-3 bg-gray-100 rounded-lg text-gray-800 placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+              (change)="onFileSelected($event)"
+            />
+          </div>
+
+          <!-- Submit Button -->
+          <button
+            type="submit"
+            class="w-full bg-yellow-600 text-white text-lg font-semibold py-3 rounded-lg hover:cursor-pointer hover:bg-yellow-700"
+            [disabled]="!categoryName || !imageToUpload"
+          >
+            Save
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
