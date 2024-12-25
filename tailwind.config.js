@@ -110,6 +110,13 @@ module.exports = {
 
                 'topbar-modern': colors.white,
 
+                gold: {
+                    300:"#edc96f",
+                    400: "#dbb556", // Gold color matching the navbar
+                    500: "#b89c55", // Gold color matching the navbar
+                    600: "#a87c45",
+                    700: "#806135",
+                  },
 
                 custom: {
                     50: colors.blue[50],
