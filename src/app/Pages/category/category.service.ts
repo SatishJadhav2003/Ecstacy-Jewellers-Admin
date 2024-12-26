@@ -25,4 +25,18 @@ export class CategoryService {
   getAllCategories(): Observable<Category[]> {
     return this.apiRequest.get('api/category/GetAll');
   }
+
+  updateStatus(Category_ID: number, Is_Active: boolean): Observable<any> {
+    return this.apiRequest.post(
+      'api/category/updateStatus/' + Category_ID + '/' + Is_Active,
+      Is_Active
+    );
+  }
+
+  updateFeature(Category_ID: number, Is_Feature: boolean): Observable<any> {
+    return this.apiRequest.post(
+      'api/category/updateFeature/' + Category_ID + '/' + Is_Feature,
+      Is_Feature
+    );
+  }
 }

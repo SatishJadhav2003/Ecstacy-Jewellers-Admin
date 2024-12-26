@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { LucideAngularModule,  UserCircle } from 'lucide-angular';
+import { Calculator, ChartPie, CircleX, FileText, LucideAngularModule,    Menu,    SidebarClose,    UserCircle, Users } from 'lucide-angular';
 
 @Component({
   selector: 'app-sidebar',
@@ -12,7 +12,17 @@ import { LucideAngularModule,  UserCircle } from 'lucide-angular';
 })
 export class SidebarComponent {
   isSidebarOpen = false;
+
+  // Icons
+  readonly close = CircleX
+  readonly menu = Menu;
   readonly user = UserCircle
+  readonly calculator = Calculator;
+  readonly pieChart = ChartPie;
+  readonly users = Users;
+  readonly fileText = FileText;
+
+  // Services
   readonly router = inject(Router)
   readonly route = inject(ActivatedRoute);
     navigateTo(path: string) {

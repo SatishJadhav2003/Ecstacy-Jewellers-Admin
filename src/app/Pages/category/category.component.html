@@ -2,13 +2,14 @@
   <div class="card-body">
     <div class="grid items-center grid-cols-1 gap-3 mb-5 2xl:grid-cols-12">
       <div class="2xl:col-span-3">
-        <h6 class="text-15">Product Categories</h6>
+        <h6 class="text-15 text-gold-700">Product Categories</h6>
       </div>
       <!--end col-->
       <div class="2xl:col-span-3 2xl:col-start-10">
         <div class="flex gap-3">
           <div class="relative grow">
             <input
+              [(ngModel)]="searchInput"
               type="text"
               class="pl-7 ltr:pl-8 rtl:pr-8 search form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
               placeholder="Search for ..."
@@ -53,6 +54,11 @@
             <th
               class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-y border-slate-200 dark:border-zink-500"
             >
+              Image
+            </th>
+            <th
+              class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-y border-slate-200 dark:border-zink-500"
+            >
               Featured
             </th>
             <th
@@ -68,7 +74,7 @@
           </tr>
         </thead>
         <tbody>
-          @for(data of categoryList;track $index){
+          @for(data of categoryList |searchPipe:searchInput ;track $index){
           <tr class="text-center">
             <td
               class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500"
@@ -79,8 +85,25 @@
               class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500"
             >
               {{ data.Category_Name }}
+              <span class="ml-4 hover:cursor-pointer">
+                <lucide-angular
+                  [img]="edit"
+                  [class]="'inline-block size-3 ltr:mr-1 rtl:ml-1'"
+                ></lucide-angular
+              ></span>
             </td>
             <td
+            (click)="zoomImage($index)"
+              class="flex justify-center px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500"
+            >
+              <img
+                class="h-14 w-14"
+                [src]="getImage(data.Category_Image)"
+                [alt]="data.Category_Name"
+              />
+            </td>
+            <td
+              (click)="changeFeature($index)"
               class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 cursor-pointer"
             >
               <span
@@ -96,16 +119,24 @@
               </span>
             </td>
 
-            <td class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 cursor-pointer">
-                <span class="delivery_status px-2.5 py-0.5 text-xs inline-block font-medium rounded border" 
-                      [ngClass]="{
-                        'bg-green-100 border-green-200 text-green-500 dark:bg-green-500/20 dark:border-green-500/20': data.Is_Active,
-                        'bg-red-100 border-red-200 text-red-500 dark:bg-red-500/20 dark:border-red-500/20': !data.Is_Active
-                      }">
-                    {{ data.Is_Active ? 'Active' : 'In Active' }}
-                </span>
+            <td
+              (click)="changeStatus($index)"
+              class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 cursor-pointer"
+            >
+              <span
+                class="delivery_status px-2.5 py-0.5 text-xs inline-block font-medium rounded border"
+                [ngClass]="{
+                  'bg-green-100 border-green-200 text-green-500 dark:bg-green-500/20 dark:border-green-500/20':
+                    data.Is_Active,
+                  'bg-red-100 border-red-200 text-red-500 dark:bg-red-500/20 dark:border-red-500/20':
+                    !data.Is_Active
+                }"
+              >
+                {{ data.Is_Active ? "Active" : "In Active" }}
+              </span>
             </td>
-<!--             
+           
+            <!--             
             <td
               class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 flex justify-center"
             >
@@ -162,4 +193,7 @@
 
 @if (isAddCate) {
 <app-add-cate (status)="categoryAddingStatus($event)" />
+}
+@if (isZoomImage) {
+  <app-zoom-image (close)="onClose($event)" [image]="imageToZoom" />
 }

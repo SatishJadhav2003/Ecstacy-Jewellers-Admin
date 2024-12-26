@@ -1,0 +1,65 @@
+<!-- Modal Overlay -->
+<div
+  class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50 px-4 py-8"
+>
+  <!-- Modal Container -->
+  <div
+    class="bg-white rounded-lg shadow-lg w-full max-w-4xl flex flex-col md:flex-row"
+  >
+    <!-- Right Section: Form with Grayish Background Image -->
+    <div class="relative w-full p-8 bg-cover bg-center bg-gray-800">
+      <!-- Overlay Effect -->
+      <div class="absolute inset-0 bg-gray-900 bg-opacity-60 rounded-lg"></div>
+
+      <!-- Form Content -->
+      <div class="relative z-10 p-6">
+        <!-- Modal Header -->
+        <div class="flex justify-between items-center border-b pb-3 mb-6">
+          <h4 class="text-xl w-full text-center font-bold text-yellow-400">
+            Change Image :
+            <input
+              class="ml-8"
+              type="file"
+              name=""
+              id=""
+              accept="image/*"
+              (change)="onFileSelected($event)"
+            />
+
+            @if (imageToUpload !=null && imageToUpload !=undefined) {
+            <button
+              type="submit"
+              class="w-16 bg-yellow-600 text-white text-sm font-semibold py-2 rounded-lg hover:cursor-pointer hover:bg-yellow-700"
+            >
+              Save
+            </button>
+            }
+          </h4>
+          <button class="text-white hover:text-gray-300" (click)="closeModal()">
+            <svg
+              class="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M6 18L18 6M6 6l12 12"
+              ></path>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Modal Body -->
+        <img
+          class="rounded-md w-full object-contain max-w-full h-[70vh]"
+          [src]="getImage()"
+          alt=""
+        />
+      </div>
+    </div>
+  </div>
+</div>

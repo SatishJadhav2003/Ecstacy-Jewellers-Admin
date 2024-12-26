@@ -17,6 +17,17 @@ export const routes: Routes = [
           path:'category',
             loadComponent: () =>
             import('./category/category.component').then((m)=>m.CategoryComponent)
+        },
+        {
+          path:'users',
+            loadComponent: () =>
+            import('./users/users.component').then((m)=>m.UsersComponent)
+        }
+        ,
+        {
+          path:'prices',
+            loadComponent: () =>
+            import('./prices/prices.component').then((m)=>m.PricesComponent)
         }
     ]
   },

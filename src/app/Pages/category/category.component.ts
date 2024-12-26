@@ -8,11 +8,14 @@ import {
   Search,
   Trash2,
 } from 'lucide-angular';
-import { MnDropdownComponent } from '../../Directives/dropdown';
 import { AddCateComponent } from './add-cate/add-cate.component';
 import { Category } from '../../Shared/Classes/Category';
-import { CommonService } from '../../Services/common.service';
 import { CategoryService } from './category.service';
+import { SearchPipe } from '../../Pipes/search.pipe';
+import { FormsModule } from '@angular/forms';
+import { UtilService } from '../../Services/util.service';
+import { imageUrl } from '../../app.config';
+import { ZoomImageComponent } from './zoom-image/zoom-image.component';
 
 @Component({
   selector: 'app-category',
@@ -20,8 +23,10 @@ import { CategoryService } from './category.service';
   imports: [
     CommonModule,
     LucideAngularModule,
-    MnDropdownComponent,
     AddCateComponent,
+    SearchPipe,
+    FormsModule,
+    ZoomImageComponent,
   ],
   templateUrl: './category.component.html',
   styleUrl: './category.component.css',
@@ -34,98 +39,15 @@ export class CategoryComponent {
   readonly plus = Plus;
 
   readonly cateService = inject(CategoryService);
-  orders = [
-    {
-      id: '01',
-      orderId: '#TWT5015100365',
-      customerName: 'Marie Prohaska',
-      location: 'Germany',
-      orderDate: '08 Jun, 2023',
-      payments: 'Credit Card',
-      quantity: '05',
-      price: '$146.99',
-      totalAmount: '$749.95',
-      status: 'Active',
-    },
-    {
-      id: '02',
-      orderId: '#TWT5015100366',
-      customerName: 'Jaqueline Hammes',
-      location: 'France',
-      orderDate: '11 July, 2023',
-      payments: 'Paypal',
-      quantity: '02',
-      price: '$450.00',
-      totalAmount: '$900.00',
-      status: 'No',
-    },
-    {
-      id: '03',
-      orderId: '#TWT5015100367',
-      customerName: 'Marlene Hirthe',
-      location: 'Argentina',
-      orderDate: '21 Aug, 2023',
-      payments: 'Visa Card',
-      quantity: '03',
-      price: '$147.23',
-      totalAmount: '$294.46',
-      status: 'New',
-    },
-    {
-      id: '01',
-      orderId: '#TWT5015100365',
-      customerName: 'Marie Prohaska',
-      location: 'Germany',
-      orderDate: '08 Jun, 2023',
-      payments: 'Credit Card',
-      quantity: '05',
-      price: '$146.99',
-      totalAmount: '$749.95',
-      status: 'Yes',
-    },
-    {
-      id: '01',
-      orderId: '#TWT5015100365',
-      customerName: 'Marie Prohaska',
-      location: 'Germany',
-      orderDate: '08 Jun, 2023',
-      payments: 'Credit Card',
-      quantity: '05',
-      price: '$146.99',
-      totalAmount: '$749.95',
-      status: 'Yes',
-    },
-    {
-      id: '01',
-      orderId: '#TWT5015100365',
-      customerName: 'Marie Prohaska',
-      location: 'Germany',
-      orderDate: '08 Jun, 2023',
-      payments: 'Credit Card',
-      quantity: '05',
-      price: '$146.99',
-      totalAmount: '$749.95',
-      status: 'Yes',
-    },
-    {
-      id: '01',
-      orderId: '#TWT5015100365',
-      customerName: 'Marie Prohaska',
-      location: 'Germany',
-      orderDate: '08 Jun, 2023',
-      payments: 'Credit Card',
-      quantity: '05',
-      price: '$146.99',
-      totalAmount: '$749.95',
-      status: 'Yes',
-    },
-  ];
+  readonly util = inject(UtilService);
 
   categoryList: Category[] = [];
   isAddCate: boolean = false;
+  isZoomImage: boolean = false;
+  imageToZoom: string = '';
+  searchInput: string = '';
 
-  ngOnInit()
-  {
+  ngOnInit() {
     this.getCategoryList();
   }
 
@@ -143,5 +65,57 @@ export class CategoryComponent {
   categoryAddingStatus(status: boolean) {
     console.log(status);
     this.isAddCate = false;
+  }
+
+  changeStatus(index: number) {
+    this.categoryList[index].Is_Active = !this.categoryList[index].Is_Active;
+    this.cateService
+      .updateStatus(
+        this.categoryList[index].Category_ID,
+        this.categoryList[index].Is_Active
+      )
+      .subscribe(
+        (res) => {
+          this.util.success('Status Updated');
+        },
+        (err) => {
+          console.log(err);
+          this.categoryList[index].Is_Active =
+            !this.categoryList[index].Is_Active;
+        }
+      );
+  }
+
+  changeFeature(index: number) {
+    this.categoryList[index].Is_Feature = !this.categoryList[index].Is_Feature;
+    this.cateService
+      .updateFeature(
+        this.categoryList[index].Category_ID,
+        this.categoryList[index].Is_Feature
+      )
+      .subscribe(
+        (res) => {
+          this.util.success('Feature Updated');
+          this.getCategoryList();
+        },
+        (err) => {
+          console.log(err);
+          this.categoryList[index].Is_Feature =
+            !this.categoryList[index].Is_Feature;
+        }
+      );
+  }
+
+  zoomImage(index: number) {
+    this.isZoomImage = true;
+    this.imageToZoom = this.categoryList[index].Category_Image;
+  }
+
+  onClose(event: any) {
+    this.isZoomImage = false;
+  }
+
+  getImage(path: string): string {
+    return imageUrl + '/api/category/images/' + path;
   }
 }
