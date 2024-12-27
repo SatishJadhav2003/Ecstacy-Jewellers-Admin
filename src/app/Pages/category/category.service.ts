@@ -22,6 +22,12 @@ export class CategoryService {
     return this.apiRequest.postImage('api/category/add', formData);
   }
 
+  updateCategory(Category_ID: number, Category_Name: string): Observable<any> {
+    return this.apiRequest.post(`api/category/updateCateName/${Category_ID}?newCategoryName=${encodeURIComponent(Category_Name)}`, null);
+  }
+  
+  
+
   getAllCategories(): Observable<Category[]> {
     return this.apiRequest.get('api/category/GetAll');
   }

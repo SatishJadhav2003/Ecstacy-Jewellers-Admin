@@ -85,7 +85,10 @@
               class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500"
             >
               {{ data.Category_Name }}
-              <span class="ml-4 hover:cursor-pointer">
+              <span
+                (click)="editCategory($index)"
+                class="ml-4 hover:cursor-pointer"
+              >
                 <lucide-angular
                   [img]="edit"
                   [class]="'inline-block size-3 ltr:mr-1 rtl:ml-1'"
@@ -93,15 +96,17 @@
               ></span>
             </td>
             <td
-            (click)="zoomImage($index)"
-              class="flex justify-center px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500"
+              (click)="zoomImage($index)"
+              class="flex justify-center px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 cursor-pointer"
             >
               <img
                 class="h-14 w-14"
                 [src]="getImage(data.Category_Image)"
                 [alt]="data.Category_Name"
+                loading="lazy"
               />
             </td>
+
             <td
               (click)="changeFeature($index)"
               class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 cursor-pointer"
@@ -135,7 +140,7 @@
                 {{ data.Is_Active ? "Active" : "In Active" }}
               </span>
             </td>
-           
+
             <!--             
             <td
               class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 flex justify-center"
@@ -193,7 +198,11 @@
 
 @if (isAddCate) {
 <app-add-cate (status)="categoryAddingStatus($event)" />
-}
-@if (isZoomImage) {
-  <app-zoom-image (close)="onClose($event)" [image]="imageToZoom" />
+} @if (isUpdateCate) {
+<app-update-cate-name
+  (status)="updateCateStatus($event)"
+  [cate]="updateCategory"
+/>
+} @if (isZoomImage) {
+<app-zoom-image (close)="onClose($event)" [image]="imageToZoom" />
 }

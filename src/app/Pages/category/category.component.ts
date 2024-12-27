@@ -16,6 +16,7 @@ import { FormsModule } from '@angular/forms';
 import { UtilService } from '../../Services/util.service';
 import { imageUrl } from '../../app.config';
 import { ZoomImageComponent } from './zoom-image/zoom-image.component';
+import { UpdateCateNameComponent } from './update-cate-name/update-cate-name.component';
 
 @Component({
   selector: 'app-category',
@@ -27,6 +28,7 @@ import { ZoomImageComponent } from './zoom-image/zoom-image.component';
     SearchPipe,
     FormsModule,
     ZoomImageComponent,
+    UpdateCateNameComponent,
   ],
   templateUrl: './category.component.html',
   styleUrl: './category.component.css',
@@ -42,8 +44,10 @@ export class CategoryComponent {
   readonly util = inject(UtilService);
 
   categoryList: Category[] = [];
+  updateCategory!: Category;
   isAddCate: boolean = false;
   isZoomImage: boolean = false;
+  isUpdateCate: boolean = false;
   imageToZoom: string = '';
   searchInput: string = '';
 
@@ -106,6 +110,20 @@ export class CategoryComponent {
       );
   }
 
+  editCategory(index: number) {
+    this.isUpdateCate = true;
+    this.updateCategory = this.categoryList[index];
+  }
+
+  updateCateStatus(catename: any) {
+    this.isUpdateCate = false;
+    const index = this.categoryList.findIndex((d)=>d.Category_ID===this.updateCategory.Category_ID);
+    if(index !=-1)
+    {
+      this.categoryList[index].Category_Name = catename;
+    }
+  }
+
   zoomImage(index: number) {
     this.isZoomImage = true;
     this.imageToZoom = this.categoryList[index].Category_Image;
@@ -116,6 +134,7 @@ export class CategoryComponent {
   }
 
   getImage(path: string): string {
-    return imageUrl + '/api/category/images/' + path;
+    return imageUrl + '/api/category/images/' + path+'?width=56&height=56';
   }
+  
 }
