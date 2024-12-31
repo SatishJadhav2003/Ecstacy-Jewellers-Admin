@@ -44,11 +44,11 @@ export class CategoryComponent {
   readonly util = inject(UtilService);
 
   categoryList: Category[] = [];
-  updateCategory!: Category;
+  selectedCategory!: Category;
   isAddCate: boolean = false;
   isZoomImage: boolean = false;
   isUpdateCate: boolean = false;
-  imageToZoom: string = '';
+
   searchInput: string = '';
 
   ngOnInit() {
@@ -112,29 +112,32 @@ export class CategoryComponent {
 
   editCategory(index: number) {
     this.isUpdateCate = true;
-    this.updateCategory = this.categoryList[index];
+    this.selectedCategory = this.categoryList[index];
   }
 
   updateCateStatus(catename: any) {
     this.isUpdateCate = false;
-    const index = this.categoryList.findIndex((d)=>d.Category_ID===this.updateCategory.Category_ID);
-    if(index !=-1)
-    {
+    const index = this.categoryList.findIndex(
+      (d) => d.Category_ID === this.selectedCategory.Category_ID
+    );
+    if (index != -1) {
       this.categoryList[index].Category_Name = catename;
     }
   }
 
   zoomImage(index: number) {
     this.isZoomImage = true;
-    this.imageToZoom = this.categoryList[index].Category_Image;
+    this.selectedCategory = this.categoryList[index];
   }
 
-  onClose(event: any) {
+  onClose(event: boolean) {
     this.isZoomImage = false;
+    if (event) {
+      this.getCategoryList();
+    }
   }
 
   getImage(path: string): string {
-    return imageUrl + '/api/category/images/' + path+'?width=56&height=56';
+    return imageUrl + '/api/category/images/' + path + '?width=56&height=56';
   }
-  
 }

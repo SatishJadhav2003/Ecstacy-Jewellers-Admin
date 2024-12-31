@@ -28,6 +28,7 @@
 
             @if (imageToUpload !=null && imageToUpload !=undefined) {
             <button
+              (click)="onUpdate()"
               type="submit"
               class="w-16 bg-yellow-600 text-white text-sm font-semibold py-2 rounded-lg hover:cursor-pointer hover:bg-yellow-700"
             >
@@ -35,7 +36,7 @@
             </button>
             }
           </h4>
-          <button class="text-white hover:text-gray-300" (click)="closeModal()">
+          <button class="text-white hover:text-gray-300" (click)="closeModal(false)">
             <svg
               class="w-6 h-6"
               fill="none"

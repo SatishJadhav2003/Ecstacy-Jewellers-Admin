@@ -200,9 +200,9 @@
 <app-add-cate (status)="categoryAddingStatus($event)" />
 } @if (isUpdateCate) {
 <app-update-cate-name
-  (status)="updateCateStatus($event)"
-  [cate]="updateCategory"
+  (catename)="updateCateStatus($event)"
+  [cate]="selectedCategory"
 />
 } @if (isZoomImage) {
-<app-zoom-image (close)="onClose($event)" [image]="imageToZoom" />
+<app-zoom-image (close)="onClose($event)" [cate]="selectedCategory" />
 }
