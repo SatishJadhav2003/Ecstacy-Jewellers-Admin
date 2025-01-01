@@ -1,6 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { Edit, LucideAngularModule, MoreHorizontal, Plus, Search, Trash2 } from 'lucide-angular';
+import {
+  Edit,
+  LucideAngularModule,
+  MoreHorizontal,
+  Plus,
+  Search,
+  Trash2,
+} from 'lucide-angular';
 import { User } from '../../Shared/Classes/User';
 import { FormsModule } from '@angular/forms';
 import { SearchPipe } from '../../Pipes/search.pipe';
@@ -9,10 +16,9 @@ import { UsersService } from './users.service';
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [CommonModule,
-    LucideAngularModule, FormsModule, SearchPipe],
+  imports: [CommonModule, LucideAngularModule, FormsModule, SearchPipe],
   templateUrl: './users.component.html',
-  styleUrl: './users.component.css'
+  styleUrl: './users.component.css',
 })
 export class UsersComponent {
   readonly search = Search;
@@ -33,10 +39,22 @@ export class UsersComponent {
   }
 
   getUserList() {
-    this.userService.getUserList().subscribe((res)=>{
-      this.userList =res;
+    this.userService.getUserList().subscribe(
+      (res) => {
+        this.userList = res;
+      },
+      (err) => {
+        console.log(err);
+      }
+    );
+  }
+
+  updateStatus(userid: number, isactive: boolean) {
+    this.userService.updateStatus(userid, !isactive).subscribe((res) => {
+      console.log(res);
+      this.getUserList();
     },err=>{
       console.log(err);
-    })
+    });
   }
 }
