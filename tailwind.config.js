@@ -301,6 +301,10 @@ module.exports = {
         require('./plugins/vanilla-calendar.js'),
         //apps pages
         require('./plugins/apps.js'),
+
+        function ({ addVariant }) {
+            addVariant('group-routerLinkActive', '&[routerLinkActive]');
+          },
     ]
 }
 
