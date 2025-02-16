@@ -12,11 +12,12 @@ import { SearchPipe } from '../../Pipes/search.pipe';
 import { MetalData } from '../../Shared/Classes/Metal';
 import { CommonService } from '../../Services/common.service';
 import { UtilService } from '../../Services/util.service';
+import { AddPriceComponent } from "./add-price/add-price.component";
 
 @Component({
   selector: 'app-prices',
   standalone: true,
-  imports: [CommonModule, LucideAngularModule, FormsModule, SearchPipe],
+  imports: [CommonModule, LucideAngularModule, FormsModule, SearchPipe, AddPriceComponent],
   templateUrl: './prices.component.html',
   styleUrl: './prices.component.css',
 })
@@ -30,6 +31,7 @@ export class PricesComponent {
   // declaration
   MetalList: MetalData[] = [];
   searchInput: string = '';
+  isAddPrice:boolean =false
 
   // Services
   readonly commonService = inject(CommonService);
@@ -54,6 +56,7 @@ export class PricesComponent {
     this.commonService.deleteMetalPrice(ID).subscribe((res) => {
       if (res) {
         this.getMetalData();
+        this.searchInput = '';
         this.utl.success("Metal Price deleted");
       }else
       {
@@ -61,5 +64,11 @@ export class PricesComponent {
       }
       console.log(res);
     });
+  }
+
+  priceAddingStatus(status: boolean) {
+    console.log(status);
+    this.isAddPrice = false;
+    this.getMetalData();
   }
 }

@@ -2,7 +2,7 @@
   <div class="card-body">
     <div class="grid items-center grid-cols-1 gap-3 mb-5 2xl:grid-cols-12">
       <div class="2xl:col-span-3">
-        <h6 class="text-15 text-gold-700">Metal Prices</h6>
+        <h6 class="text-15 text-gold-700">Metal Prices (1g)</h6>
       </div>
       <!--end col-->
       <div class="2xl:col-span-3 2xl:col-start-10">
@@ -24,6 +24,7 @@
             ></lucide-angular>
           </div>
           <button
+          (click)="isAddPrice =true"
             type="button"
             class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20"
           >
@@ -55,7 +56,11 @@
             >
               Metal
             </th>
-
+            <th
+            class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-y border-slate-200 dark:border-zink-500"
+          >
+            Price
+          </th>
             <th
               class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-y border-slate-200 dark:border-zink-500"
             >
@@ -81,7 +86,11 @@
             >
               {{ data.Metal_Name }}
             </td>
-
+            <td
+            class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500"
+          >
+            {{ data.Price }}
+          </td>
             <td
               (click)="deleteRow(data.Price_ID)"
               class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 cursor-pointer"
@@ -100,6 +109,6 @@
 </div>
 <!--end col-->
 
-<!-- @if (isAddCate) {
-    <app-add-cate (status)="categoryAddingStatus($event)" />
-    } -->
+@if (isAddPrice) {
+    <app-add-price (status)="priceAddingStatus($event)" />
+    }
