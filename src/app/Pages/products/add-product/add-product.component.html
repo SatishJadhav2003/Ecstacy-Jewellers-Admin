@@ -1,0 +1,169 @@
+<div class="col-span-12 card 2xl:col-span-12">
+  <div class="card-body">
+    <div class="grid items-center grid-cols-1 gap-3 mb-5 2xl:grid-cols-12">
+      <div class="2xl:col-span-3">
+        <h6 class="text-15 text-gold-700 text-center">Add New Product</h6>
+      </div>
+    </div>
+    <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+      <div class="overflow-x-auto">
+        <div class="flex flex-wrap">
+          <!-- Product Title -->
+          <div class="mb-4 w-full">
+            <label for="productTitle" class="block text-gray-600 font-bold mb-2"
+              >Product Title</label
+            >
+            <input
+              type="text"
+              id="productTitle"
+              class="w-full border border-gray-300 rounded-md p-2"
+              placeholder="Enter product title"
+              formControlName="productTitle"
+            />
+          </div>
+
+          <!-- Description -->
+          <div class="mb-4 w-full">
+            <label for="description" class="block text-gray-600 font-bold mb-2"
+              >Description</label
+            >
+            <textarea
+              id="description"
+              class="w-full border border-gray-300 rounded-md p-2"
+              placeholder="Enter description"
+              formControlName="description"
+            ></textarea>
+          </div>
+
+          <!-- Category Dropdown -->
+          <div class="mb-4 w-full lg:w-4/12 md:w-1/2 px-1">
+            <label for="category" class="block text-gray-600 font-bold mb-2"
+              >Category</label
+            >
+            <select
+              id="category"
+              class="w-full border border-gray-300 rounded-md p-2"
+              formControlName="category"
+            >
+              @for (item of categoryList; track $index) {
+              <option [value]="item.Category_ID">
+                {{ item.Category_Name }}
+              </option>
+              }
+            </select>
+          </div>
+
+          <!-- Metal Dropdown -->
+          <div class="mb-4 w-full lg:w-4/12 md:w-1/2 px-1">
+            <label for="metal" class="block text-gray-600 font-bold mb-2"
+              >Metal</label
+            >
+            <select
+              id="metal"
+              class="w-full border border-gray-300 rounded-md p-2"
+              formControlName="metal"
+            >
+              @for (item of metalList; track $index) {
+              <option [value]="item.Metal_ID">
+                {{ item.Metal_Name }}
+              </option>
+              }
+            </select>
+          </div>
+
+          <!-- Making Charges -->
+          <div class="mb-4 w-full lg:w-4/12 md:w-1/2 px-1">
+            <label
+              for="makingCharges"
+              class="block text-gray-600 font-bold mb-2"
+              >Making Charges</label
+            >
+            <input
+              type="number"
+              id="makingCharges"
+              class="w-full border border-gray-300 rounded-md p-2"
+              placeholder="Enter making charges"
+              formControlName="makingCharges"
+            />
+          </div>
+          <!-- Weight in Grams -->
+          <div class="mb-4 w-full lg:w-4/12 md:w-1/2 px-1">
+            <label for="weight" class="block text-gray-600 font-bold mb-2"
+              >Weight (in grams)</label
+            >
+            <input
+              type="number"
+              id="weight"
+              class="w-full border border-gray-300 rounded-md p-2"
+              placeholder="Enter weight in grams"
+              formControlName="weight"
+            />
+          </div>
+          <!-- Stock Quantity -->
+          <div class="mb-4 w-full lg:w-4/12 md:w-1/2 px-1">
+            <label
+              for="stockQuantity"
+              class="block text-gray-600 font-bold mb-2"
+              >Stock Quantity</label
+            >
+            <input
+              type="number"
+              id="stockQuantity"
+              class="w-full border border-gray-300 rounded-md p-2"
+              placeholder="Enter stock quantity"
+              formControlName="stockQuantity"
+            />
+          </div>
+          <div class="mb-4 w-full lg:w-4/12 md:w-1/2 px-1">
+            <label for="images" class="block text-gray-600 font-bold mb-2"
+              >Images</label
+            >
+            <input
+                type="file"
+                id="images"
+                class="w-full border border-gray-300 rounded-md p-2"
+                multiple
+                accept="image/*"
+                (change)="handleImageSelection($event)"
+            />
+          </div>
+          <div class="mb-4 w-full lg:w-4/12 md:w-1/2 px-1">
+            <!-- <label for="stockQuantity" class="block text-white font-bold mb-2"
+              >Action</label
+            > -->
+            <button
+              type="submit"
+              class="w-full text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20"
+            >
+              Save
+            </button>
+            
+          </div>
+          <div class="mb-4 w-full lg:w-4/12 md:w-1/2 px-1">
+            <!-- <label for="stockQuantity" class="block text-white font-bold mb-2"
+              >Action</label
+            > -->
+            <button
+            type="button"
+            (click)="onCancel()"
+            class="w-full text-white btn bg-red-500 border-red-500 hover:text-white hover:bg-red-600 hover:border-red-600 focus:text-white focus:bg-red-600 focus:border-red-600 focus:ring focus:ring-red-100 active:text-white active:bg-red-600 active:border-red-600 active:ring active:ring-red-100 dark:ring-red-400/20"
+          >
+            Cancel
+          </button>
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </form>
+    <div>
+      <!-- Image Upload -->
+      
+    </div>
+
+    <!-- Modal Header -->
+  </div>
+</div>
+
+<!-- Modal Header -->

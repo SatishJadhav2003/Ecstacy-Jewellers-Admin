@@ -24,6 +24,7 @@
             ></lucide-angular>
           </div>
           <button
+            (click)="onAddProduct()"
             type="button"
             class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20"
           >
@@ -53,7 +54,12 @@
             <th
               class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-y border-slate-200 dark:border-zink-500"
             >
-              Price
+              Making Charges
+            </th>
+            <th
+              class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-y border-slate-200 dark:border-zink-500"
+            >
+              Latest Price
             </th>
             <th
               class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-y border-slate-200 dark:border-zink-500"
@@ -89,24 +95,17 @@
             <td
               class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500"
             >
+              {{ data.Making_charges }}
+            </td>
+            <td
+              class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500"
+            >
               {{ data.Price }}
             </td>
             <td
               class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500"
             >
               {{ data.Stock_Quantity }}
-            </td>
-            <td
-              class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 flex justify-evenly"
-            >
-              <lucide-angular
-                [img]="eye"
-                [class]="'inline-block size-3 ltr:mr-1 rtl:ml-1 text-green-600'"
-              ></lucide-angular>
-              <lucide-angular
-                [img]="delete"
-                [class]="'inline-block size-3 ltr:mr-1 rtl:ml-1 text-red-600'"
-              ></lucide-angular>
             </td>
 
             <td
@@ -124,6 +123,18 @@
                 {{ data.Is_Active ? "Active" : "In Active" }}
               </span>
             </td>
+            <td
+              class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 flex justify-evenly"
+            >
+              <lucide-angular
+                [img]="eye"
+                [class]="'inline-block size-3 ltr:mr-1 rtl:ml-1 text-green-600'"
+              ></lucide-angular>
+              <lucide-angular
+                [img]="delete"
+                [class]="'inline-block size-3 ltr:mr-1 rtl:ml-1 text-red-600'"
+              ></lucide-angular>
+            </td>
           </tr>
           }
         </tbody>
@@ -133,6 +144,6 @@
 </div>
 <!--end col-->
 
-<!-- @if (isAddCate) {
-    <app-add-cate (status)="categoryAddingStatus($event)" />
-    } -->
+<!-- @if (addProduct) {
+<app-add-product (status)="addStatus($event)" />
+} -->
