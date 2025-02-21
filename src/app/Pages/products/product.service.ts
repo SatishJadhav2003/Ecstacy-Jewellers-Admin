@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { Observable, switchMap } from 'rxjs';
 import { ApiRequestService } from '../../Services/api-request.service';
 import { ProductOverview, SaveProduct } from './product.model';
+import { Product } from '../../Shared/Classes/product.model';
 
 @Injectable({
   providedIn: 'root',
@@ -26,5 +27,12 @@ export class ProductService {
 
   getAllProducts(): Observable<ProductOverview[]> {
     return this.apiRequest.get('api/product/admin/GetAllProducts');
+  }
+
+  updateProductStatus(Product_ID: number, Status: boolean) {
+    return this.apiRequest.post('api/product/UpdateStatus/' + Product_ID +'/'+Status, Status);
+  }
+  getProduct(Product_ID: any): Observable<Product> {
+    return this.apiRequest.get('api/product/admin/' + Product_ID);
   }
 }

@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { HomeComponent } from './home/home.component';
 
 export const routes: Routes = [
@@ -44,6 +43,13 @@ export const routes: Routes = [
           import('./products/add-product/add-product.component').then(
             (m) => m.AddProductComponent
           ),
+      },
+      {
+        path: 'viewproduct/:ID',
+        loadComponent: () =>
+        import('./products/add-product/add-product.component').then(
+          (m) => m.AddProductComponent
+        ),
       },
     ],
   },

@@ -12,6 +12,7 @@ import {
 import { Location } from '@angular/common';
 import { SaveProduct } from '../product.model';
 import { ProductService } from '../product.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-add-product',
@@ -27,14 +28,17 @@ export class AddProductComponent {
   readonly fb = inject(FormBuilder);
   readonly location = inject(Location);
   readonly productService = inject(ProductService);
+  readonly route = inject(ActivatedRoute);
   // Variables
   @Output() status = new EventEmitter<boolean>();
   categoryList: Category[] = [];
   metalList: Metal[] = [];
   productForm!: FormGroup;
   ImagesToUpload: File[] = [];
-
+  Product_ID!: number;
   ngOnInit() {
+    this.Product_ID = parseInt(this.route.snapshot.paramMap.get('ID') || '0');
+    
     this.getCategoryList();
     this.getMetalList();
     this.productForm = this.fb.group({
@@ -45,6 +49,29 @@ export class AddProductComponent {
       stockQuantity: ['', [Validators.required, Validators.min(0)]],
       category: ['', [Validators.required]],
       metal: ['', [Validators.required]],
+    });
+    if (this.Product_ID) {
+      this.disableForm();
+      this.getProductInfo();
+    }
+  }
+
+  disableForm() {
+    this.productForm.disable();
+  }
+  getProductInfo()
+  {
+    this.productService.getProduct(this.Product_ID).subscribe((res) => {
+      console.log(res);
+      this.productForm.patchValue({
+        productTitle: res.Product_Name,
+        description: res.Description,
+        makingCharges: res.Making_Charges,
+        weight: res.Weight,
+        stockQuantity: res.Stock_Quantity,
+        category: res.Category_ID,
+        metal: res.Metal_ID
+      });
     });
   }
 
@@ -71,8 +98,8 @@ export class AddProductComponent {
     }
   }
   onSubmit() {
-    if (this.ImagesToUpload.length <=0) {
-      this.util.warn("Please select at least one image");
+    if (this.ImagesToUpload.length <= 0) {
+      this.util.warn('Please select at least one image');
       return;
     }
     const saveData: SaveProduct = {
