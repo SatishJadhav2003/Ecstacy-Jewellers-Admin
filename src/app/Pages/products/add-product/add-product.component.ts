@@ -13,15 +13,22 @@ import { Location } from '@angular/common';
 import { SaveProduct } from '../product.model';
 import { ProductService } from '../product.service';
 import { ActivatedRoute } from '@angular/router';
+import { Edit, LucideAngularModule } from 'lucide-angular';
+import { Product_Images } from '../../../Shared/Classes/ProductImages';
+import { imageUrl } from '../../../app.config';
 
 @Component({
   selector: 'app-add-product',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule,LucideAngularModule],
   templateUrl: './add-product.component.html',
   styleUrl: './add-product.component.css',
 })
 export class AddProductComponent {
+
+  // icons
+  readonly edit  = Edit;
+
   // Services
   readonly util = inject(UtilService);
   readonly common = inject(CommonService);
@@ -35,7 +42,9 @@ export class AddProductComponent {
   metalList: Metal[] = [];
   productForm!: FormGroup;
   ImagesToUpload: File[] = [];
+  imagesList:Product_Images[] =[];
   Product_ID!: number;
+  editMode:boolean = false;
   ngOnInit() {
     this.Product_ID = parseInt(this.route.snapshot.paramMap.get('ID') || '0');
     
@@ -51,8 +60,9 @@ export class AddProductComponent {
       metal: ['', [Validators.required]],
     });
     if (this.Product_ID) {
-      this.disableForm();
+      // this.disableForm();
       this.getProductInfo();
+      this.getImages();
     }
   }
 
@@ -87,6 +97,17 @@ export class AddProductComponent {
     });
   }
 
+  getImages()
+  {
+    this.productService.getProductImages(this.Product_ID).subscribe((data) => {
+      this.imagesList = data;
+    });
+  }
+
+  getImage(path: string): string {
+    return imageUrl + '/api/product/images/' + path;
+  }
+
   // CRUD
 
   handleImageSelection(event: Event) {
@@ -98,11 +119,12 @@ export class AddProductComponent {
     }
   }
   onSubmit() {
-    if (this.ImagesToUpload.length <= 0) {
+    if (this.ImagesToUpload.length <= 0 && !this.Product_ID) {
       this.util.warn('Please select at least one image');
       return;
     }
     const saveData: SaveProduct = {
+      Product_ID:this.Product_ID??0,
       Product_Name: this.productForm.value.productTitle,
       Description: this.productForm.value.description,
       Price: this.productForm.value.makingCharges,
@@ -111,14 +133,19 @@ export class AddProductComponent {
       Category_ID: this.productForm.value.category,
       Metal_ID: this.productForm.value.metal,
     };
-    console.log(saveData);
-    console.log(this.ImagesToUpload);
-    debugger;
+
+    if (this.Product_ID) {
+      this.productService.updateProduct(this.Product_ID,saveData,this.ImagesToUpload).subscribe((res)=>{
+        console.log(res);
+        this.onCancel();
+      })
+      return;
+    }
+
 
     this.productService
       .addProduct(saveData, this.ImagesToUpload)
       .subscribe((res) => {
-        console.log(res);
         this.ImagesToUpload = [];
         this.productForm.reset();
       });

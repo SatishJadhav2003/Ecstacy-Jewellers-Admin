@@ -8,6 +8,7 @@ export class ProductOverview {
 }
 
 export class SaveProduct {
+  Product_ID:number= 0;
   Product_Name: string = '';
   Description: string = '';
   Price: number = 0;
