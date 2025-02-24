@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
-import { Calculator, ChartPie, CircleX, FileText, LucideAngularModule,    Menu,    SidebarClose,    UserCircle, Users } from 'lucide-angular';
+import { Calculator, ChartPie, CircleX, FileText, LucideAngularModule,    Menu,    Package,    ShoppingBag,    ShoppingBasket,    SidebarClose,    UserCircle, Users } from 'lucide-angular';
 
 @Component({
   selector: 'app-sidebar',
@@ -21,6 +21,8 @@ export class SidebarComponent {
   readonly pieChart = ChartPie;
   readonly users = Users;
   readonly fileText = FileText;
+  readonly package = Package
+  readonly shopping = ShoppingBag
 
   // Services
   readonly router = inject(Router)

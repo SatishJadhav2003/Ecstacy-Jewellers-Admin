@@ -13,21 +13,21 @@ import { Location } from '@angular/common';
 import { SaveProduct } from '../product.model';
 import { ProductService } from '../product.service';
 import { ActivatedRoute } from '@angular/router';
-import { Edit, LucideAngularModule } from 'lucide-angular';
+import { Cross, Edit, LucideAngularModule, X } from 'lucide-angular';
 import { Product_Images } from '../../../Shared/Classes/ProductImages';
 import { imageUrl } from '../../../app.config';
 
 @Component({
   selector: 'app-add-product',
   standalone: true,
-  imports: [ReactiveFormsModule,LucideAngularModule],
+  imports: [ReactiveFormsModule, LucideAngularModule],
   templateUrl: './add-product.component.html',
   styleUrl: './add-product.component.css',
 })
 export class AddProductComponent {
-
   // icons
-  readonly edit  = Edit;
+  readonly edit = Edit;
+  readonly X = X;
 
   // Services
   readonly util = inject(UtilService);
@@ -42,12 +42,12 @@ export class AddProductComponent {
   metalList: Metal[] = [];
   productForm!: FormGroup;
   ImagesToUpload: File[] = [];
-  imagesList:Product_Images[] =[];
+  imagesList: Product_Images[] = [];
   Product_ID!: number;
-  editMode:boolean = false;
+  editMode: boolean = false;
   ngOnInit() {
     this.Product_ID = parseInt(this.route.snapshot.paramMap.get('ID') || '0');
-    
+
     this.getCategoryList();
     this.getMetalList();
     this.productForm = this.fb.group({
@@ -69,8 +69,7 @@ export class AddProductComponent {
   disableForm() {
     this.productForm.disable();
   }
-  getProductInfo()
-  {
+  getProductInfo() {
     this.productService.getProduct(this.Product_ID).subscribe((res) => {
       console.log(res);
       this.productForm.patchValue({
@@ -80,7 +79,7 @@ export class AddProductComponent {
         weight: res.Weight,
         stockQuantity: res.Stock_Quantity,
         category: res.Category_ID,
-        metal: res.Metal_ID
+        metal: res.Metal_ID,
       });
     });
   }
@@ -97,15 +96,14 @@ export class AddProductComponent {
     });
   }
 
-  getImages()
-  {
+  getImages() {
     this.productService.getProductImages(this.Product_ID).subscribe((data) => {
       this.imagesList = data;
     });
   }
 
   getImage(path: string): string {
-    return imageUrl + '/api/product/images/' + path;
+    return `${imageUrl}/api/product/images/${path}?height=90&width=96`;
   }
 
   // CRUD
@@ -124,7 +122,7 @@ export class AddProductComponent {
       return;
     }
     const saveData: SaveProduct = {
-      Product_ID:this.Product_ID??0,
+      Product_ID: this.Product_ID ?? 0,
       Product_Name: this.productForm.value.productTitle,
       Description: this.productForm.value.description,
       Price: this.productForm.value.makingCharges,
@@ -135,19 +133,33 @@ export class AddProductComponent {
     };
 
     if (this.Product_ID) {
-      this.productService.updateProduct(this.Product_ID,saveData,this.ImagesToUpload).subscribe((res)=>{
-        console.log(res);
-        this.onCancel();
-      })
+      this.productService
+        .updateProduct(this.Product_ID, saveData, this.ImagesToUpload)
+        .subscribe((res) => {
+          console.log(res);
+          this.onCancel();
+        });
       return;
     }
-
 
     this.productService
       .addProduct(saveData, this.ImagesToUpload)
       .subscribe((res) => {
         this.ImagesToUpload = [];
         this.productForm.reset();
+      });
+  }
+
+  deleteImage(Product_ID: any, Image_Name: string) {
+    this.productService
+      .removeImage(this.Product_ID, Image_Name)
+      .subscribe((res) => {
+        console.log(res);
+        this.util.success('Image Deleted Successfully');
+        const index = this.imagesList.findIndex(
+          (a) => a.Image_URL == Image_Name
+        );
+        this.imagesList.splice(index, 1);
       });
   }
 

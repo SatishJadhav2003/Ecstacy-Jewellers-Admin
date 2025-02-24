@@ -70,4 +70,9 @@ export class ProductService {
   getProductImages(Product_ID: any): Observable<Product_Images[]> {
     return this.apiRequest.get('api/productimages/' + Product_ID);
   }
+
+  removeImage(ID:number, Image_Name: string): Observable<any> {
+    const encodedFileName = encodeURIComponent(Image_Name);
+    return this.apiRequest.delete('api/productimages/delete-image/'+ID+'/'+encodedFileName);
+  }
 }
