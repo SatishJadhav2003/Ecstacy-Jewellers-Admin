@@ -93,9 +93,11 @@
                 {{ data.Amount | currency: 'INR' }}
               </td>
               <td
+              (click)="onViewOrder(data.Order_ID)"
                 class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 flex justify-evenly"
               >
                 <lucide-angular
+                
                   [img]="eye"
                   [class]="'inline-block size-3 ltr:mr-1 rtl:ml-1 text-green-600 cursor-pointer'"
                 ></lucide-angular>

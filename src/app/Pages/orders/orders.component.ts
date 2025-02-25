@@ -49,4 +49,11 @@ export class OrdersComponent {
       this.ordersList = res;
     })
   }
+  onViewOrder(Order_ID:number)
+  {
+    this.router.navigate(['/home/orderdetails/'+Order_ID], {
+      relativeTo: this.route,
+    });
+  }
+  
 }

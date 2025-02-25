@@ -47,15 +47,19 @@ export const routes: Routes = [
       {
         path: 'viewproduct/:ID',
         loadComponent: () =>
-        import('./products/add-product/add-product.component').then(
-          (m) => m.AddProductComponent
-        ),
-      },{
+          import('./products/add-product/add-product.component').then(
+            (m) => m.AddProductComponent
+          ),
+      },
+      {
         path: 'orders',
         loadComponent: () =>
-          import('./orders/orders.component').then(
-            (m) => m.OrdersComponent
-          ),
+          import('./orders/orders.component').then((m) => m.OrdersComponent),
+      },
+      {
+        path: 'orderdetails/:ID',
+        loadComponent: () =>
+          import('./orders/order-details/order-details.component').then((m) => m.OrderDetailsComponent),
       },
     ],
   },
