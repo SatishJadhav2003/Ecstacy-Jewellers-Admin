@@ -10,4 +10,13 @@ export class Order_Item
 {
     Order_ID:number =0
     Order_Item_ID:number=0
+    Product_ID:number=0
+    Product_Name:string=''
+    Product_Image:string=''
+    Unit_Price:number=0
+    Total_Price:number=0
+    Quantity:number=0
+    Shipping_Address:string=''
+    Billing_Address:string=''
+    Payment_Status:string =''
 }
