@@ -20,3 +20,13 @@ export class Order_Item
     Billing_Address:string=''
     Payment_Status:string =''
 }
+
+
+export class Order_Status 
+{
+    Order_Status_ID:number=0;
+    Order_ID:number =0;
+    Status:string ="";
+    Status_Timestamp:Date = new Date();
+    Location:string ="";
+}

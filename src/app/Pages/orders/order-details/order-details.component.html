@@ -1,93 +1,170 @@
 <div class="col-span-12 card 2xl:col-span-12">
-    <div class="card-body">
-      <div class="grid items-center grid-cols-1 gap-3 mb-5 2xl:grid-cols-12">
-        <div class="2xl:col-span-3">
-          <h6 class="text-15 text-gold-700 text-center">Order Details</h6>
-        </div>
+  <div class="card-body">
+    <div class="items-center grid-cols-1 gap-3 mb-5 2xl:grid-cols-12 flex">
+      <div class="2xl:col-span-3">
+        <h6 class="text-15 text-gold-700 text-center">Delivery Status</h6>
       </div>
-      <div class="overflow-x-auto">
-        <table class="w-full whitespace-nowrap">
-            <thead
-              class="ltr:text-left rtl:text-right bg-slate-100 text-slate-500 dark:text-zink-200 dark:bg-zink-600"
+      @if (canUpdate) {
+      <button
+        (click)="onUpdateStatus()"
+        type="button"
+        class="ml-auto text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20"
+      >
+        Update Status
+      </button>
+      }
+    </div>
+    <div class="overflow-x-auto">
+      <table class="w-full whitespace-nowrap">
+        <thead
+          class="ltr:text-left rtl:text-right bg-slate-100 text-slate-500 dark:text-zink-200 dark:bg-zink-600"
+        >
+          <tr>
+            <th
+              class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-y border-slate-200 dark:border-zink-500"
             >
-              <tr>
-                <th
-                  class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-y border-slate-200 dark:border-zink-500"
-                >
-                  #
-                </th>
-                <th
-                  class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-y border-slate-200 dark:border-zink-500"
-                >
-                  Image
-                </th>
-                <th
-                  class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-y border-slate-200 dark:border-zink-500"
-                >
-                 Product Name
-                </th>
-                <th
-                  class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-y border-slate-200 dark:border-zink-500"
-                >
-                 Quantity
-                </th>
-                <th
-                  class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-y border-slate-200 dark:border-zink-500"
-                >
-                 Unit Price
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              @for (item of itemList; track $index) {
-              <tr class="text-center">
-                <td
-                  class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500"
-                >
-                 {{item.Order_Item_ID}}
-                </td>
-                <td
-                  class="flex justify-center px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500"
-                >
-                 <img class="h-12" [src]="getImage(item.Product_Image)" [alt]="item.Product_Name">
-                </td>
-                <td
-                  class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500"
-                >
-                  {{item.Product_Name}}
-                </td>
-                <td
-                  class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500"
-                >
-                 {{item.Quantity}}
-                </td>
-                <td
-                  class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500"
-                >
-                 {{item.Unit_Price | currency: 'INR'}}
-                </td>
-              </tr>
-            }
-            </tbody>
-          </table>
-          @if (itemList.length >0) {
-          <div class="mt-5 flex flex-wrap">
-            <h6 class="text-15 text-gold-700">Payment Status :</h6>
-            <p class="pl-3" >{{itemList[0].Payment_Status}}</p>
-          </div>
-          
-          <div class="mt-5 flex flex-wrap">
-            <h6 class="text-15 text-gold-700">Billing Address :</h6>
-            <p class="pl-3" >{{itemList[0].Billing_Address}}</p>
-          </div>
-          <div class="mt-5 flex flex-wrap">
-            <h6 class="text-15 text-gold-700">Shipping Address :</h6>
-            <p class="pl-3" >{{itemList[0].Shipping_Address}}</p>
-          </div>
-        }
+              #
+            </th>
+            <th
+              class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-y border-slate-200 dark:border-zink-500"
+            >
+              Date Time
+            </th>
+            <th
+              class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-y border-slate-200 dark:border-zink-500"
+            >
+              Status
+            </th>
+            <th
+              class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-y border-slate-200 dark:border-zink-500"
+            >
+              Location
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of orderStatus; track $index) {
+          <tr class="text-center">
+            <td
+              class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500"
+            >
+              {{ $index + 1 }}
+            </td>
+            <td
+              class="flex justify-center px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500"
+            >
+              {{ item.Status_Timestamp | date : "dd-MMM-yyyy hh:mm a" }}
+            </td>
+            <td
+              class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500"
+            >
+              {{ item.Status }}
+            </td>
+            <td
+              class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500"
+            >
+              {{ item.Location }}
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    <div
+      class="grid items-center grid-cols-1 gap-3 mb-5 2xl:grid-cols-12 mt-10"
+    >
+      <div class="2xl:col-span-3">
+        <h6 class="text-15 text-gold-700">Order Details</h6>
       </div>
     </div>
+    <div class="overflow-x-auto">
+      <table class="w-full whitespace-nowrap">
+        <thead
+          class="ltr:text-left rtl:text-right bg-slate-100 text-slate-500 dark:text-zink-200 dark:bg-zink-600"
+        >
+          <tr>
+            <th
+              class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-y border-slate-200 dark:border-zink-500"
+            >
+              #
+            </th>
+            <th
+              class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-y border-slate-200 dark:border-zink-500"
+            >
+              Image
+            </th>
+            <th
+              class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-y border-slate-200 dark:border-zink-500"
+            >
+              Product Name
+            </th>
+            <th
+              class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-y border-slate-200 dark:border-zink-500"
+            >
+              Quantity
+            </th>
+            <th
+              class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-y border-slate-200 dark:border-zink-500"
+            >
+              Unit Price
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (item of itemList; track $index) {
+          <tr class="text-center">
+            <td
+              class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500"
+            >
+              {{ item.Order_Item_ID }}
+            </td>
+            <td
+              class="flex justify-center px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500"
+            >
+              <img
+                class="h-12"
+                [src]="getImage(item.Product_Image)"
+                [alt]="item.Product_Name"
+              />
+            </td>
+            <td
+              class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500"
+            >
+              {{ item.Product_Name }}
+            </td>
+            <td
+              class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500"
+            >
+              {{ item.Quantity }}
+            </td>
+            <td
+              class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500"
+            >
+              {{ item.Unit_Price | currency : "INR" }}
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+      @if (itemList.length >0) {
+      <div class="mt-5 flex flex-wrap">
+        <h6 class="text-15 text-gold-700">Payment Status :</h6>
+        <p class="pl-3">{{ itemList[0].Payment_Status }}</p>
+      </div>
+
+      <div class="mt-5 flex flex-wrap">
+        <h6 class="text-15 text-gold-700">Billing Address :</h6>
+        <p class="pl-3">{{ itemList[0].Billing_Address }}</p>
+      </div>
+      <div class="mt-5 flex flex-wrap">
+        <h6 class="text-15 text-gold-700">Shipping Address :</h6>
+        <p class="pl-3">{{ itemList[0].Shipping_Address }}</p>
+      </div>
+      }
+    </div>
   </div>
-        
-   
-  
+</div>
+
+@if (updateStatus) {
+<app-order-status-update [orderID]="Order_ID" (status)="addStatus($event)"></app-order-status-update>
+}
