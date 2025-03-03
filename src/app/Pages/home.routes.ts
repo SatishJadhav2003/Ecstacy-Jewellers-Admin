@@ -61,6 +61,11 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./orders/order-details/order-details.component').then((m) => m.OrderDetailsComponent),
       },
+      {
+        path: 'customorders',
+        loadComponent: () =>
+          import('./custom-orders/custom-orders.component').then((m) => m.CustomOrdersComponent),
+      },
     ],
   },
 ];

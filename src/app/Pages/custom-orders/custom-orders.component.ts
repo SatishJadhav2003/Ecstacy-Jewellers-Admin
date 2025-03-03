@@ -5,25 +5,23 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { Eye, LucideAngularModule,  Search, Trash2 } from 'lucide-angular';
 import { SearchPipe } from '../../Pipes/search.pipe';
 import { UtilService } from '../../Services/util.service';
-import { ProductService } from '../products/product.service';
-import { OrderOverview } from './order.model';
-import { OrdersService } from './orders.service';
+import { OrdersService } from '../orders/orders.service';
+import { CustomOrderOverview } from './customorder.model';
 
 @Component({
-  selector: 'app-orders',
+  selector: 'app-custom-orders',
   standalone: true,
-  imports: [ CommonModule,
-    FormsModule,
+  imports: [ FormsModule,
     LucideAngularModule,
     SearchPipe,
-    RouterModule],
-  templateUrl: './orders.component.html',
-  styleUrl: './orders.component.css'
+    RouterModule,CommonModule],
+  templateUrl: './custom-orders.component.html',
+  styleUrl: './custom-orders.component.css'
 })
-export class OrdersComponent {
+export class CustomOrdersComponent {
   // Variables
   searchInput: string = '';
-  ordersList: OrderOverview[] = [
+  ordersList: CustomOrderOverview[] = [
     
   ];
 
@@ -39,7 +37,7 @@ export class OrdersComponent {
   readonly util = inject(UtilService);
 
   ngOnInit() {
-    this.OrderServices.getAllOrdersOverview().subscribe((res)=>{
+    this.OrderServices.getAllCustomOrdersOverview().subscribe((res)=>{
       this.ordersList = res;
     })
   }

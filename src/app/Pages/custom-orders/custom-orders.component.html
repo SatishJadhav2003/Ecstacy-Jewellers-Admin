@@ -1,0 +1,122 @@
+<div class="col-span-12 card 2xl:col-span-12">
+    <div class="card-body">
+      <div class="grid items-center grid-cols-1 gap-3 mb-5 2xl:grid-cols-12">
+        <div class="2xl:col-span-3">
+          <h6 class="text-15 text-gold-700">Custom Orders</h6>
+        </div>
+        <div class="2xl:col-span-3 2xl:col-start-10">
+          <div class="flex gap-3">
+            <div class="relative grow">
+              <input
+                [(ngModel)]="searchInput"
+                type="text"
+                class="pl-7 ltr:pl-8 rtl:pr-8 search form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+                placeholder="Search for ..."
+                autocomplete="off"
+              />
+  
+              <lucide-angular
+                [img]="search"
+                [class]="
+                  'ml-2 inline-block size-4 absolute ltr:left-2.5 rtl:right-1.5 top-2.5 text-slate-500 dark:text-zink-200 fill-slate-100 dark:fill-zink-600'
+                "
+              ></lucide-angular>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full whitespace-nowrap">
+          <thead
+            class="ltr:text-left rtl:text-right bg-slate-100 text-slate-500 dark:text-zink-200 dark:bg-zink-600"
+          >
+            <tr>
+              <th
+                class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-y border-slate-200 dark:border-zink-500"
+              >
+                #
+              </th>
+              <th
+                class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-y border-slate-200 dark:border-zink-500"
+              >
+                Customer Name
+              </th>
+              <th
+              class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-y border-slate-200 dark:border-zink-500"
+            >
+             Mobile No.
+            </th>
+              <th
+                class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-y border-slate-200 dark:border-zink-500"
+              >
+               Order Date
+              </th>
+              <th
+                class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-y border-slate-200 dark:border-zink-500"
+              >
+               Status
+              </th>
+              <th
+                class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-y border-slate-200 dark:border-zink-500"
+              >
+               Amount
+              </th>
+              <th
+                class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-y border-slate-200 dark:border-zink-500"
+              >
+                Action
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            @for(data of ordersList |searchPipe:searchInput ;track $index){
+            <tr class="text-center">
+              <td
+                class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500"
+              >
+                {{ data.Order_ID }}
+              </td>
+              <td
+                class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500"
+              >
+                {{ data.User_Name }}
+              </td>
+              <td
+              class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500"
+            >
+              {{ data.Mobile_Number }}
+            </td>
+              <td
+                class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500"
+              >
+                {{ data.Order_Date | date:'dd-MMM-yyyy' }}
+              </td>
+              <td
+                class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500"
+              >
+                {{ data.Status }}
+              </td>
+              <td
+                class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500"
+              >
+                {{ data.Amount | currency: 'INR' }}
+              </td>
+              <td
+              
+                class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 flex justify-evenly"
+              >
+                <lucide-angular
+                (click)="onViewOrder(data.Order_ID)"
+                  [img]="eye"
+                  [class]="'inline-block size-3 ltr:mr-1 rtl:ml-1 text-green-600 cursor-pointer'"
+                ></lucide-angular>
+              </td>
+            </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  

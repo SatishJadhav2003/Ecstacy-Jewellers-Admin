@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { ApiRequestService } from '../../Services/api-request.service';
 import { Observable } from 'rxjs';
 import { OrderOverview, Order_Item, Order_Status } from './order.model';
+import { CustomOrderOverview } from '../custom-orders/customorder.model';
 
 @Injectable({
   providedIn: 'root'
@@ -9,6 +10,8 @@ import { OrderOverview, Order_Item, Order_Status } from './order.model';
 export class OrdersService {
   readonly apiRequest = inject(ApiRequestService);
 
+
+  // Orders
 
   getAllOrdersOverview():Observable<OrderOverview[]>
   {
@@ -27,6 +30,12 @@ export class OrdersService {
   saveStatus(data:any)
   {
     return this.apiRequest.post("api/order/UpdateStatus",data)
+  }
+
+  // Custom Orders
+  getAllCustomOrdersOverview():Observable<CustomOrderOverview[]>
+  {
+    return  this.apiRequest.get('api/order/ordersoverview');
   }
 
 }
