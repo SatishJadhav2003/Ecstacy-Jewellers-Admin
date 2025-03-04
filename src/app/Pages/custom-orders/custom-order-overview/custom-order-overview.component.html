@@ -1,0 +1,59 @@
+<div class="col-span-12 card 2xl:col-span-12">
+  <div class="card-body">
+    <div class="items-center grid-cols-1 gap-3 mb-5 2xl:grid-cols-12">
+      <div class="2xl:col-span-3">
+        <h6 class="text-15 text-gold-700 text-center">Order Details</h6>
+      </div>
+    </div>
+    <div class="overflow-x-auto">
+      <div class="flex">
+        <div class="w-1/2">
+          <img
+            class="h-80 w-full object-contain"
+            [src]="getImage(orderItem.File_Path)"
+            alt=""
+          />
+        </div>
+        <div class="w-1/2 pl-2">
+          <div class="mt-5 flex flex-wrap">
+            <h6 class="text-15 text-gold-700">Category :</h6>
+            <p class="pl-3">{{orderItem.Category_Name}}</p>
+          </div>
+          <div class="mt-5 flex flex-wrap">
+            <h6 class="text-15 text-gold-700">Purity :</h6>
+            <p class="pl-3">{{orderItem.Purity}}</p>
+          </div>
+          <div class="mt-5 flex flex-wrap">
+            <h6 class="text-15 text-gold-700">Remark :</h6>
+            <p class="pl-3">{{orderItem.Remark}}</p>
+          </div>
+          <div class="mt-5 flex flex-wrap">
+            <h6 class="text-15 text-gold-700">Price :</h6>
+            <p class="pl-3">{{orderItem.Amount | currency:'INR'}}</p>
+          </div>
+          <div class="mt-5 flex flex-wrap">
+            <h6 class="text-15 text-gold-700">Mobile :</h6>
+            <p class="pl-3">{{orderItem.Mobile_Number}}</p>
+          </div>
+          <div class="mt-5 flex flex-wrap">
+            <h6 class="text-15 text-gold-700">Email :</h6>
+            <p class="pl-3">{{orderItem.Email}}</p>
+          </div>
+        <div class="mt-5 flex flex-wrap">
+            <h6 class="text-15 text-gold-700">Status :</h6>
+            <select class="pl-3" [(ngModel)]="orderItem.Status" (ngModelChange)="changeStatus()" >
+                <option value="Placed">Placed</option>
+                <option value="Shipped">Shipped</option>
+                <option value="Out for delivery">Out for delivery</option>
+                <option value="Delivered">Delivered</option>
+            </select>
+        </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- @if (updateStatus) {
+  <app-order-status-update [orderID]="Order_ID" (status)="addStatus($event)"></app-order-status-update>
+  } -->

@@ -35,7 +35,16 @@ export class OrdersService {
   // Custom Orders
   getAllCustomOrdersOverview():Observable<CustomOrderOverview[]>
   {
-    return  this.apiRequest.get('api/order/ordersoverview');
+    return  this.apiRequest.get('api/customorder/ordersoverview');
   }
+  getCustomOrderDetails(Order_ID:number):Observable<any>
+  {
+    return this.apiRequest.get('api/order/orderItems/'+Order_ID);
+  }
+
+  updateCustoOrderStatus(Order_ID: number, Status: string) {
+    return this.apiRequest.post(`api/customorder/UpdateStatus/${Order_ID}?Status=${encodeURIComponent(Status)}`, {});
+}
+
 
 }

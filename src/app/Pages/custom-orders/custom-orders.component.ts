@@ -43,7 +43,9 @@ export class CustomOrdersComponent {
   }
   onViewOrder(Order_ID:number)
   {
-    this.router.navigate(['/home/orderdetails/'+Order_ID], {
+    const data = this.ordersList.find(a=>a.Order_ID===Order_ID);
+    localStorage.setItem('Custom_Order',JSON.stringify(data));
+    this.router.navigate(['/home/customorderdetails/'+Order_ID], {
       relativeTo: this.route,
     });
   }
