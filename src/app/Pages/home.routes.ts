@@ -71,6 +71,11 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./custom-orders/custom-order-overview/custom-order-overview.component').then((m) => m.CustomOrderOverviewComponent),
       },
+      {
+        path: 'banner',
+        loadComponent: () =>
+          import('./banners/banners.component').then((m) => m.BannersComponent),
+      },
     ],
   },
 ];

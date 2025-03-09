@@ -1,0 +1,124 @@
+<div class="col-span-12 card 2xl:col-span-12">
+  <div class="card-body">
+    <div class="grid items-center grid-cols-1 gap-3 mb-5 2xl:grid-cols-12">
+      <div class="2xl:col-span-3">
+        <h6 class="text-15 text-gold-700">Product Categories</h6>
+      </div>
+      <!--end col-->
+      <div class="2xl:col-span-3 2xl:col-start-10">
+        <div class="flex gap-3">
+          <div class="relative grow">
+            <input
+              [(ngModel)]="searchInput"
+              type="text"
+              class="pl-7 ltr:pl-8 rtl:pr-8 search form-input border-slate-200 dark:border-zink-500 focus:outline-none focus:border-custom-500 disabled:bg-slate-100 dark:disabled:bg-zink-600 disabled:border-slate-300 dark:disabled:border-zink-500 dark:disabled:text-zink-200 disabled:text-slate-500 dark:text-zink-100 dark:bg-zink-700 dark:focus:border-custom-800 placeholder:text-slate-400 dark:placeholder:text-zink-200"
+              placeholder="Search for ..."
+              autocomplete="off"
+            />
+
+            <lucide-angular
+              [img]="search"
+              [class]="
+                'ml-2 inline-block size-4 absolute ltr:left-2.5 rtl:right-1.5 top-2.5 text-slate-500 dark:text-zink-200 fill-slate-100 dark:fill-zink-600'
+              "
+            ></lucide-angular>
+          </div>
+          <button
+          (click)="addBanner()"
+            type="button"
+            class="text-white btn bg-custom-500 border-custom-500 hover:text-white hover:bg-custom-600 hover:border-custom-600 focus:text-white focus:bg-custom-600 focus:border-custom-600 focus:ring focus:ring-custom-100 active:text-white active:bg-custom-600 active:border-custom-600 active:ring active:ring-custom-100 dark:ring-custom-400/20"
+          >
+            Add New
+          </button>
+        </div>
+      </div>
+      <!--end col-->
+    </div>
+    <!--end grid-->
+    <div class="overflow-x-auto">
+      <table class="w-full whitespace-nowrap">
+        <thead
+          class="ltr:text-left rtl:text-right bg-slate-100 text-slate-500 dark:text-zink-200 dark:bg-zink-600"
+        >
+          <tr>
+            <th
+              class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-y border-slate-200 dark:border-zink-500"
+            >
+              #
+            </th>
+
+            <th
+              class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-y border-slate-200 dark:border-zink-500"
+            >
+              Image
+            </th>
+            <!-- <th
+              class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-y border-slate-200 dark:border-zink-500"
+            >
+              Status
+            </th> -->
+            <th
+              class="px-3.5 py-2.5 first:pl-5 last:pr-5 font-semibold border-y border-slate-200 dark:border-zink-500"
+            >
+              Action
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          @for(data of BannerList |searchPipe:searchInput ;track $index){
+          <tr class="text-center">
+            <td
+              class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500"
+            >
+              {{ $index + 1 }}
+            </td>
+
+            <td
+              (click)="zoomImage($index)"
+              class="flex justify-center px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 cursor-pointer"
+            >
+              <img
+                [src]="getImage(data.Banner_Image)"
+                [alt]="data.Banner_Name"
+                loading="lazy"
+              />
+            </td>
+            <!-- <td
+              (click)="changeStatus($index)"
+              class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 cursor-pointer"
+            >
+              <span
+                class="delivery_status px-2.5 py-0.5 text-xs inline-block font-medium rounded border"
+                [ngClass]="{
+                  'bg-green-100 border-green-200 text-green-500 dark:bg-green-500/20 dark:border-green-500/20':
+                    data.Is_Active,
+                  'bg-red-100 border-red-200 text-red-500 dark:bg-red-500/20 dark:border-red-500/20':
+                    !data.Is_Active
+                }"
+              >
+                {{ data.Is_Active ? "Active" : "In Active" }}
+              </span>
+            </td> -->
+            <td
+              (click)="deleteRow(data.Banner_ID,data.Banner_Image)"
+              class="px-3.5 py-2.5 first:pl-5 last:pr-5 border-y border-slate-200 dark:border-zink-500 cursor-pointer"
+            >
+              <lucide-angular
+                [img]="trash"
+                [class]="'inline-block size-3 ltr:mr-1 rtl:ml-1 text-red-600'"
+              ></lucide-angular>
+            </td>
+          </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<!--end col-->
+
+@if (isAddNew) {
+<app-add-banner (status)="BannerAddingStatus($event)" />
+} @if (isZoomImage) {
+<app-zoom-banner-image (close)="onClose($event)" [banner]="selectedBanner" />
+}
