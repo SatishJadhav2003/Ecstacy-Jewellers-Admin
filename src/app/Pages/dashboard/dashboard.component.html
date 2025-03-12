@@ -1,5 +1,5 @@
-<div class="grid grid-cols-12 2xl:grid-cols-12 gap-x-5 ">
-  <div class="col-span-12 card md:col-span-6 lg:col-span-3 2xl:col-span-3">
+<div class="grid grid-cols-12 2xl:grid-cols-12 gap-x-5">
+  <div class="col-span-12 card md:col-span-6 lg:col-span-4 2xl:col-span-4">
     <div class="text-center card-body">
       <div
         class="flex items-center justify-center mx-auto rounded-full size-14 bg-custom-100 text-custom-500 dark:bg-custom-500/20"
@@ -9,16 +9,16 @@
       <h5 class="mt-4 mb-2">
         <span
           class="counter-value"
-          [countUp]="236.18"
+          [countUp]="revenueOverview?.Total_Revenue"
           [options]="{ decimalPlaces: 2 }"
           >0</span
-        >k
+        >
       </h5>
       <p class="text-slate-500 dark:text-zink-200">Total Revenue</p>
     </div>
   </div>
   <!--end col-->
-  <div class="col-span-12 card md:col-span-6 lg:col-span-3 2xl:col-span-3">
+  <div class="col-span-12 card md:col-span-6 lg:col-span-4 2xl:col-span-4">
     <div class="text-center card-body">
       <div
         class="flex items-center justify-center mx-auto text-purple-500 bg-purple-100 rounded-full size-14 dark:bg-purple-500/20"
@@ -26,13 +26,15 @@
         <lucide-angular [img]="Package" class="my-icon"></lucide-angular>
       </div>
       <h5 class="mt-4 mb-2">
-        <span class="counter-value" [countUp]="13461">0</span>
+        <span class="counter-value" [countUp]="revenueOverview?.Total_Orders"
+          >0</span
+        >
       </h5>
       <p class="text-slate-500 dark:text-zink-200">Total Orders</p>
     </div>
   </div>
   <!--end col-->
-  <div class="col-span-12 card md:col-span-6 lg:col-span-3 2xl:col-span-3">
+  <div class="col-span-12 card md:col-span-6 lg:col-span-4 2xl:col-span-4">
     <div class="text-center card-body">
       <div
         class="flex items-center justify-center mx-auto text-green-500 bg-green-100 rounded-full size-14 dark:bg-green-500/20"
@@ -40,13 +42,15 @@
         <lucide-angular [img]="Truck" class="my-icon"></lucide-angular>
       </div>
       <h5 class="mt-4 mb-2">
-        <span class="counter-value" [countUp]="17150">0</span>
+        <span class="counter-value" [countUp]="revenueOverview?.Delivered"
+          >0</span
+        >
       </h5>
       <p class="text-slate-500 dark:text-zink-200">Delivered</p>
     </div>
   </div>
   <!--end col-->
-  <div class="col-span-12 card md:col-span-6 lg:col-span-3 2xl:col-span-3">
+  <!-- <div class="col-span-12 card md:col-span-6 lg:col-span-4 2xl:col-span-4">
     <div class="text-center card-body">
       <div
         class="flex items-center justify-center mx-auto text-red-500 bg-red-100 rounded-full size-14 dark:bg-red-500/20"
@@ -58,12 +62,14 @@
       </h5>
       <p class="text-slate-500 dark:text-zink-200">Cancelled</p>
     </div>
-  </div>
+  </div> -->
   <!--end col-->
   <div class="col-span-12 card 2xl:col-span-12">
     <div class="card-body">
       <div class="flex flex-col gap-4 mb-4 md:mb-3 md:items-center md:flex-row">
-        <h6 class="grow text-15">Sales Revenue Overview</h6>
+        <h6 class="grow text-15">
+          Sales Revenue Overview of {{ currentYear }}
+        </h6>
       </div>
       <div class="grid grid-cols-12 gap-4 mb-3">
         <div class="col-span-12 md:col-span-6 lg:col-span-3">
@@ -76,17 +82,18 @@
             <div class="grow">
               <p class="mb-1 text-slate-500 dark:text-zink-200">Total Sales</p>
               <h5 class="text-15">
-                $<span
+                ₹<span
                   class="counter-value"
-                  [countUp]="1517.36"
+                  [countUp]="totalSaveInMonthlyChart"
                   [options]="{ decimalPlaces: 2 }"
                   >0</span
-                >k
+                >
               </h5>
             </div>
           </div>
         </div>
       </div>
+      @if (salesRevenueOverview) {
       <div id="salesRevenueOverview" class="apex-charts" dir="ltr">
         <apx-chart
           [series]="salesRevenueOverview.series"
@@ -101,9 +108,11 @@
           dir="ltr"
         ></apx-chart>
       </div>
+      }
     </div>
   </div>
   <!--end col-->
+  @if (revenueByCategory) {
   <div class="col-span-12 card lg:col-span-6 2xl:col-span-4">
     <div class="card-body">
       <div class="flex flex-col gap-4 mb-4 md:mb-3 md:items-center md:flex-row">
@@ -119,6 +128,7 @@
       </div>
     </div>
   </div>
+  }
   <!--end col-->
   <div class="col-span-12 card lg:col-span-6 2xl:col-span-4">
     <div class="card-body">
@@ -129,7 +139,7 @@
           class="relative dropdown shrink-0"
           placement="bottom-start"
         >
-          <button
+          <!-- <button
             mndropdownToggle
             type="button"
             class="flex items-center justify-center size-[30px] p-0 bg-white text-slate-500 btn hover:text-slate-500 hover:bg-slate-100 focus:text-slate-500 focus:bg-slate-100 active:text-slate-500 active:bg-slate-100 dark:bg-zink-700 dark:hover:bg-slate-500/10 dark:focus:bg-slate-500/10 dark:active:bg-slate-500/10 dropdown-toggle"
@@ -137,7 +147,7 @@
             data-bs-toggle="dropdown"
           >
             <lucide-angular
-            [img]="verticalMenu"
+              [img]="verticalMenu"
               [class]="'inline-block size-4'"
             ></lucide-angular>
           </button>
@@ -182,18 +192,19 @@
                 >This Yearly</a
               >
             </li>
-          </ul>
+          </ul> -->
         </div>
       </div>
       <ul class="flex flex-col gap-5">
+        @for (item of topSellingProducts; track $index) {
         <li class="flex items-center gap-3">
           <div
             class="flex items-center justify-center size-10 rounded-md bg-slate-100 dark:bg-zink-600"
           >
-            <img src="assets/images/product/img-02.png" alt="" class="h-6" />
+            <img [src]="getImage(item.Image_URL)" alt="" class="h-6" />
           </div>
           <div class="overflow-hidden grow">
-            <h6 class="truncate">Mesh Ergonomic Black Chair</h6>
+            <h6 class="truncate">{{ item.Product_Name }}</h6>
             <div class="text-yellow-500">
               <i class="ri-star-fill"></i>
               <i class="ri-star-fill ms-1"></i>
@@ -209,139 +220,10 @@
                 'inline-block size-4 align-middle text-slate-500 dark:text-zink-200 ltr:mr-1 rtl:ml-1'
               "
             ></lucide-angular>
-            798
+            {{ item.Total_Quantity_Sold }}
           </h6>
         </li>
-        <li class="flex items-center gap-3">
-          <div
-            class="flex items-center justify-center size-10 rounded-md bg-slate-100 dark:bg-zink-600"
-          >
-            <img src="assets/images/product/img-03.png" alt="" class="h-6" />
-          </div>
-          <div class="overflow-hidden grow">
-            <h6 class="truncate">Fastcolors Typography Men</h6>
-            <div class="text-yellow-500">
-              <i class="ri-star-fill"></i>
-              <i class="ri-star-fill ms-1"></i>
-              <i class="ri-star-fill ms-1"></i>
-              <i class="ri-star-fill ms-1"></i>
-              <i class="ri-star-half-fill ms-1"></i>
-            </div>
-          </div>
-          <h6 class="shrink-0">
-            <lucide-angular
-              [img]="cart"
-              [class]="
-                'inline-block size-4 align-middle text-slate-500 dark:text-zink-200 ltr:mr-1 rtl:ml-1'
-              "
-            ></lucide-angular>
-            695
-          </h6>
-        </li>
-        <li class="flex items-center gap-3">
-          <div
-            class="flex items-center justify-center size-10 rounded-md bg-slate-100 dark:bg-zink-600"
-          >
-            <img src="assets/images/product/img-04.png" alt="" class="h-6" />
-          </div>
-          <div class="overflow-hidden grow">
-            <h6 class="truncate">Mesh Ergonomic Green Chair</h6>
-            <div class="text-yellow-500">
-              <i class="ri-star-fill"></i>
-              <i class="ri-star-fill ms-1"></i>
-              <i class="ri-star-fill ms-1"></i>
-              <i class="ri-star-fill ms-1"></i>
-              <i class="ri-star-half-fill ms-1"></i>
-            </div>
-          </div>
-          <h6 class="shrink-0">
-            <lucide-angular
-              [img]="cart"
-              [class]="
-                'inline-block size-4 align-middle text-slate-500 dark:text-zink-200 ltr:mr-1 rtl:ml-1'
-              "
-            ></lucide-angular>
-            985
-          </h6>
-        </li>
-        <li class="flex items-center gap-3">
-          <div
-            class="flex items-center justify-center size-10 rounded-md bg-slate-100 dark:bg-zink-600"
-          >
-            <img src="assets/images/product/img-05.png" alt="" class="h-6" />
-          </div>
-          <div class="overflow-hidden grow">
-            <h6 class="truncate">Techel Black Bluetooth Soundbar</h6>
-            <div class="text-yellow-500">
-              <i class="ri-star-fill"></i>
-              <i class="ri-star-fill ms-1"></i>
-              <i class="ri-star-fill ms-1"></i>
-              <i class="ri-star-fill ms-1"></i>
-              <i class="ri-star-half-fill ms-1"></i>
-            </div>
-          </div>
-          <h6 class="shrink-0">
-            <lucide-angular
-              [img]="cart"
-              [class]="
-                'inline-block size-4 align-middle text-slate-500 dark:text-zink-200 ltr:mr-1 rtl:ml-1'
-              "
-            ></lucide-angular>
-            813
-          </h6>
-        </li>
-        <li class="flex items-center gap-3">
-          <div
-            class="flex items-center justify-center size-10 rounded-md bg-slate-100 dark:bg-zink-600"
-          >
-            <img src="assets/images/product/img-06.png" alt="" class="h-6" />
-          </div>
-          <div class="overflow-hidden grow">
-            <h6 class="truncate">Bovet Fleurier AIFSQ029</h6>
-            <div class="text-yellow-500">
-              <i class="ri-star-fill"></i>
-              <i class="ri-star-fill ms-1"></i>
-              <i class="ri-star-fill ms-1"></i>
-              <i class="ri-star-fill ms-1"></i>
-              <i class="ri-star-half-fill ms-1"></i>
-            </div>
-          </div>
-          <h6 class="shrink-0">
-            <lucide-angular
-              [img]="cart"
-              [class]="
-                'inline-block size-4 align-middle text-slate-500 dark:text-zink-200 ltr:mr-1 rtl:ml-1'
-              "
-            ></lucide-angular>
-            915
-          </h6>
-        </li>
-        <li class="flex items-center gap-3">
-          <div
-            class="flex items-center justify-center size-10 rounded-md bg-slate-100 dark:bg-zink-600"
-          >
-            <img src="assets/images/product/img-03.png" alt="" class="h-6" />
-          </div>
-          <div class="overflow-hidden grow">
-            <h6 class="truncate">Fastcolors Typography Men</h6>
-            <div class="text-yellow-500">
-              <i class="ri-star-fill"></i>
-              <i class="ri-star-fill ms-1"></i>
-              <i class="ri-star-fill ms-1"></i>
-              <i class="ri-star-fill ms-1"></i>
-              <i class="ri-star-half-fill ms-1"></i>
-            </div>
-          </div>
-          <h6 class="shrink-0">
-            <lucide-angular
-              [img]="cart"
-              [class]="
-                'inline-block size-4 align-middle text-slate-500 dark:text-zink-200 ltr:mr-1 rtl:ml-1'
-              "
-            ></lucide-angular>
-            785
-          </h6>
-        </li>
+        }
       </ul>
     </div>
   </div>
@@ -350,7 +232,7 @@
     <div class="card-body">
       <div class="flex items-center mb-3">
         <h6 class="grow text-15">Low Stocks Products</h6>
-        <div
+        <!-- <div
           mndropdown
           class="relative dropdown shrink-0"
           placement="bottom-start"
@@ -363,7 +245,7 @@
             data-bs-toggle="dropdown"
           >
             <lucide-angular
-            [img]="verticalMenu"
+              [img]="verticalMenu"
               [class]="'inline-block size-4'"
             ></lucide-angular>
           </button>
@@ -409,17 +291,18 @@
               >
             </li>
           </ul>
-        </div>
+        </div> -->
       </div>
       <ul class="flex flex-col gap-5">
+        @for (item of lowStockProducts; track $index) {
         <li class="flex items-center gap-3">
           <div
             class="flex items-center justify-center size-10 rounded-md bg-slate-100 dark:bg-zink-600"
           >
-            <img src="assets/images/product/img-02.png" alt="" class="h-6" />
+            <img [src]="getImage(item.Image_URL)" alt="" class="h-6" />
           </div>
           <div class="overflow-hidden grow">
-            <h6 class="truncate">Mesh Ergonomic Black Chair</h6>
+            <h6 class="truncate">{{item.Product_Name}}</h6>
             <div class="text-yellow-500">
               <i class="ri-star-fill"></i>
               <i class="ri-star-fill ms-1"></i>
@@ -428,116 +311,9 @@
               <i class="ri-star-half-fill ms-1"></i>
             </div>
           </div>
-          <h6 class="shrink-0">
-
-            798
-          </h6>
+          <h6 class="shrink-0">{{item.Stock_Quantity}}</h6>
         </li>
-        <li class="flex items-center gap-3">
-          <div
-            class="flex items-center justify-center size-10 rounded-md bg-slate-100 dark:bg-zink-600"
-          >
-            <img src="assets/images/product/img-03.png" alt="" class="h-6" />
-          </div>
-          <div class="overflow-hidden grow">
-            <h6 class="truncate">Fastcolors Typography Men</h6>
-            <div class="text-yellow-500">
-              <i class="ri-star-fill"></i>
-              <i class="ri-star-fill ms-1"></i>
-              <i class="ri-star-fill ms-1"></i>
-              <i class="ri-star-fill ms-1"></i>
-              <i class="ri-star-half-fill ms-1"></i>
-            </div>
-          </div>
-          <h6 class="shrink-0">
-
-            695
-          </h6>
-        </li>
-        <li class="flex items-center gap-3">
-          <div
-            class="flex items-center justify-center size-10 rounded-md bg-slate-100 dark:bg-zink-600"
-          >
-            <img src="assets/images/product/img-04.png" alt="" class="h-6" />
-          </div>
-          <div class="overflow-hidden grow">
-            <h6 class="truncate">Mesh Ergonomic Green Chair</h6>
-            <div class="text-yellow-500">
-              <i class="ri-star-fill"></i>
-              <i class="ri-star-fill ms-1"></i>
-              <i class="ri-star-fill ms-1"></i>
-              <i class="ri-star-fill ms-1"></i>
-              <i class="ri-star-half-fill ms-1"></i>
-            </div>
-          </div>
-          <h6 class="shrink-0">
-
-            985
-          </h6>
-        </li>
-        <li class="flex items-center gap-3">
-          <div
-            class="flex items-center justify-center size-10 rounded-md bg-slate-100 dark:bg-zink-600"
-          >
-            <img src="assets/images/product/img-05.png" alt="" class="h-6" />
-          </div>
-          <div class="overflow-hidden grow">
-            <h6 class="truncate">Techel Black Bluetooth Soundbar</h6>
-            <div class="text-yellow-500">
-              <i class="ri-star-fill"></i>
-              <i class="ri-star-fill ms-1"></i>
-              <i class="ri-star-fill ms-1"></i>
-              <i class="ri-star-fill ms-1"></i>
-              <i class="ri-star-half-fill ms-1"></i>
-            </div>
-          </div>
-          <h6 class="shrink-0">
-
-            813
-          </h6>
-        </li>
-        <li class="flex items-center gap-3">
-          <div
-            class="flex items-center justify-center size-10 rounded-md bg-slate-100 dark:bg-zink-600"
-          >
-            <img src="assets/images/product/img-06.png" alt="" class="h-6" />
-          </div>
-          <div class="overflow-hidden grow">
-            <h6 class="truncate">Bovet Fleurier AIFSQ029</h6>
-            <div class="text-yellow-500">
-              <i class="ri-star-fill"></i>
-              <i class="ri-star-fill ms-1"></i>
-              <i class="ri-star-fill ms-1"></i>
-              <i class="ri-star-fill ms-1"></i>
-              <i class="ri-star-half-fill ms-1"></i>
-            </div>
-          </div>
-          <h6 class="shrink-0">
-
-            915
-          </h6>
-        </li>
-        <li class="flex items-center gap-3">
-          <div
-            class="flex items-center justify-center size-10 rounded-md bg-slate-100 dark:bg-zink-600"
-          >
-            <img src="assets/images/product/img-03.png" alt="" class="h-6" />
-          </div>
-          <div class="overflow-hidden grow">
-            <h6 class="truncate">Fastcolors Typography Men</h6>
-            <div class="text-yellow-500">
-              <i class="ri-star-fill"></i>
-              <i class="ri-star-fill ms-1"></i>
-              <i class="ri-star-fill ms-1"></i>
-              <i class="ri-star-fill ms-1"></i>
-              <i class="ri-star-half-fill ms-1"></i>
-            </div>
-          </div>
-          <h6 class="shrink-0">
-
-            785
-          </h6>
-        </li>
+        }
       </ul>
     </div>
   </div>
