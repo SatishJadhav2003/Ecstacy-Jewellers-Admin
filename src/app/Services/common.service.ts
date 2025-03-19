@@ -23,4 +23,6 @@ export class CommonService {
   deleteMetalPrice(ID: Number): Observable<boolean> {
     return this.apiRequest.delete('api/metal/deletePrice/' + ID);
   }
+
+  
 }

@@ -76,6 +76,11 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./banners/banners.component').then((m) => m.BannersComponent),
       },
+      {
+        path:'**',
+        redirectTo:'',
+        pathMatch:'full'
+      }
     ],
   },
 ];

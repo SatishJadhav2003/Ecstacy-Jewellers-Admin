@@ -6,10 +6,11 @@
   >
     <div class="flex items-center justify-between mb-6">
       <div
-        class="flex items-center justify-center w-full bg-white"
+        class="flex items-center justify-center w-full "
         [ngClass]="{ 'hidden md:block': isSidebarOpen }"
       >
-        <img src="assets/icons/logogold-hr.png" alt="Logo" class="h-8 mr-2" />
+        <!-- <img src="assets/icons/logogold-hr.png" alt="Logo" class="h-8 mr-2" /> -->
+        <img src="assets/icons/logowhite.png" alt="Logo" class="h-28 mr-2" />
         <!-- <span class="text-white text-xl font-semibold">Fettle</span> -->
       </div>
       <!-- Close Button for Mobile -->
@@ -18,7 +19,7 @@
       <ul class="space-y-2 font-medium">
         <li>
           <a
-            routerLink=""
+          (click)="navigateTo('')"
             class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
           >
             <lucide-angular
@@ -136,9 +137,9 @@
             >
           </a>
         </li>
-        <!-- <li>
+        <li>
           <a
-            (click)="navigateTo('users')"
+            (click)="logOut()"
             class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group cursor-pointer"
           >
             <svg
@@ -158,10 +159,11 @@
             </svg>
             <span
               class="flex-1 ms-3 whitespace-nowrap text-white font-semibold hover:text-black"
-              >Sign In</span
+              >Log Out</span
             >
           </a>
         </li>
+        <!-- 
         <li>
           <a
             (click)="navigateTo('users')"
@@ -197,10 +199,9 @@
   <!-- Main Content -->
   <div class="flex-1 flex flex-col h-screen overflow-hidden">
     <!-- Topbar -->
-    <header
+    <!-- <header
       class="bg-gold-600 h-16 flex items-center justify-between px-4 md:px-6 sticky top-0 z-10"
     >
-      <!-- Hamburger Menu -->
       <button
         class="text-white material-icons md:hidden"
         (click)="isSidebarOpen = !isSidebarOpen"
@@ -216,6 +217,15 @@
           class="my-icon text-white"
         ></lucide-angular>
       </button>
+    </header> -->
+
+    <!-- Dashboard Content -->
+    <main class="p-6 flex-1 overflow-y-auto">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>
+
       <!-- <div class="flex items-center ml-auto">
         <lucide-angular
          
@@ -227,11 +237,3 @@
 
         <span class="text-white ml-4 font-bold">Admin Name</span>
       </div> -->
-    </header>
-
-    <!-- Dashboard Content -->
-    <main class="p-6 flex-1 overflow-y-auto">
-      <router-outlet></router-outlet>
-    </main>
-  </div>
-</div>

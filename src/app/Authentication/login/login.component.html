@@ -1,0 +1,52 @@
+<form
+  [formGroup]="loginForm"
+  (ngSubmit)="onLogin()"
+  class="flex items-center justify-center min-h-screen bg-gold-500"
+>
+  <div class="w-full max-w-sm bg-white p-6 rounded-lg shadow-lg">
+    <h2 class="text-center text-2xl font-semibold mb-4">Login</h2>
+
+    <div class="mb-4">
+      <label class="block text-gray-700">Email</label>
+      <input
+        [ngClass]="getClass('email')"
+        type="email"
+        name="email"
+        formControlName="email"
+        required
+        class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
+    </div>
+
+    <div class="mb-4 relative">
+      <label class="block text-gray-700">Password</label>
+      <input
+        [ngClass]="getClass('password')"
+        formControlName="password"
+        name="password"
+        [type]="hide ? 'password' : 'text'"
+        required
+        class="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+      />
+      <button
+        type="button"
+        (click)="hide = !hide"
+        class="absolute right-3 top-9 text-gray-500"
+      >
+        <i class="fas" [class.fa-eye]="!hide" [class.fa-eye-slash]="hide"></i>
+      </button>
+    </div>
+
+    <!-- <div class="flex justify-end mb-4">
+        <a routerLink="/forgotPassword" class="text-sm text-gray-600 hover:underline">Forgot Password?</a>
+      </div> -->
+
+    <button
+      type="submit"
+      class="w-full py-2 text-white bg-blue-500 rounded hover:bg-blue-600 disabled:opacity-50"
+    >
+      <!-- <span class="animate-spin mr-2 border-2 border-white border-t-transparent rounded-full w-5 h-5 inline-block"></span> -->
+      <span>Login</span>
+    </button>
+  </div>
+</form>
